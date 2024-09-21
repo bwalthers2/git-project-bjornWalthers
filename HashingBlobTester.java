@@ -35,8 +35,9 @@ public class HashingBlobTester {
         }catch (IOException e) {
             e.printStackTrace();
         }
-       String total = printFileString(fileName3);
+        String total = printFileString(fileName3);
         System.out.println(tester.encryptThisString(total));
+        tester.putInObjects(fileName3, tester.encryptThisString(total));
     }
 }
 

@@ -107,7 +107,7 @@ public class Git {
     {
         File ind = new File("git/objects/index");
         String toHash = hash;
-        String theFile = fileName;
+        String theFile = " " + fileName;
         if (ind.exists())
         {
             try (FileOutputStream outputStream = new FileOutputStream(ind)) {

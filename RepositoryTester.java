@@ -7,6 +7,6 @@ public class RepositoryTester {
         //Testing setup
         Git tester = new Git();
         tester.setup();
-        tester.remove();
+        //tester.remove();
     }
 }
