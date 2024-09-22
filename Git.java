@@ -5,8 +5,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Git {
     // setup command uses an integer variable countToRemove to check if everything exists. If this value is equal to three at the end, it will print out that everything exists.
@@ -96,7 +94,7 @@ public class Git {
     }
 
     public static void main(String args[]) throws NoSuchAlgorithmException {
-        
+
     }
     //Adds the filename and the hash into the index file
     public static void putInObjects(String fileName,String hash)
@@ -129,5 +127,22 @@ public class Git {
             e.printStackTrace();
         }
     }
-    
+    //Checks if a specific string is in the indexFile, returns true if it is in, returns false if not
+    public static boolean CheckTheString(String str, File fileName) throws IOException 
+    {
+        BufferedReader br = new BufferedReader(new FileReader(fileName));
+        String line = "";
+        while ((line = br.readLine()) != null)
+        {
+            if (line.contains(str))
+            {
+                br.close();
+                return true;
+            }
+        }
+        br.close();
+        return false;
+
+
+    }
 }
