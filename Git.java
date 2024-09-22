@@ -99,6 +99,7 @@ public class Git {
     //Adds the filename and the hash into the index file
     public static void putInIndex(String fileName,String hash)
     {
+        Path IndexPath = Paths.get(fileName);
         File ind = new File("git/index");
         String toHash = "\n" + hash;
         String theFile = " " + fileName;
@@ -114,10 +115,13 @@ public class Git {
         }
     }
     //uses a file to create a hash and add it into the index file
-    public static void MakeAndPlaceBlob(String fileName)
+    public static void MakeAndPlaceIndex(String fileName)
     {
+        Path IndexPath = Paths.get("git/index");
         Path filePath = Paths.get(fileName);
         try {
+            String toAppend = Files.readString(IndexPath);
+            System.out.println("I want to add"  + toAppend);
             String content = Files.readString(filePath);
             String hash = encryptThisString(content);
             File ind = new File("git/index");
@@ -153,10 +157,22 @@ public class Git {
 
     }
     //Adds the file data to the objects folderewr
-    public static void AddFileContents(String fileName)
+    public static void AddFileContents(String fileName) throws IOException
     {
-        String codedDirectory = encryptThisString(fileName).substring(0,2);
+        Path filePath = Paths.get(fileName);
+        String content = Files.readString(filePath);
+        String codedDirectory = encryptThisString(fileName + content).substring(0,2);
         File fileToAdd = new File("git/objects/" + codedDirectory);
-       fileToAdd.mkdir();
+        fileToAdd.mkdir();
+        File Update = new File("git/objects/" + codedDirectory +"/" + encryptThisString(fileName + content).substring(2));
+        if (Update.createNewFile() == true)
+        {
+            System.out.println("blob made");
+        }
+        try (FileOutputStream outputStream = new FileOutputStream(Update)) {
+            outputStream.write(content.getBytes());
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
