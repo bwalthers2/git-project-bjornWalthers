@@ -1,27 +1,11 @@
-import java.io.File;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Scanner;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class HashingBlobTester {
-    private static String printFileString(String fileName) {
-        try{
-        String total = "";
-        File file = new File(fileName);
-        Scanner scannerCounter = new Scanner(file);
-        while(scannerCounter.hasNext())
-        {
-            String next = scannerCounter.next();
-            total = total + next;
-        }
-        System.out.println(total + "");
-        scannerCounter.close();
-        return total;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return "";
-    }
     public static void main(String[] args) {
         Git tester = new Git();
         //Testing File
@@ -35,9 +19,19 @@ public class HashingBlobTester {
         }catch (IOException e) {
             e.printStackTrace();
         }
-        String total = printFileString(fileName3);
-        System.out.println(tester.encryptThisString(total));
-        tester.putInObjects(fileName3, tester.encryptThisString(total));
+        tester.MakeAndPlaceBlob(fileName3);
+
+        Path filePath = Paths.get(fileName3);
+        try {
+            String content = Files.readString(filePath);
+            System.out.println("The contents of the file are " + content);
+            System.out.println("The hash of this file is " + tester.encryptThisString(content));
+            
+
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 }
 
