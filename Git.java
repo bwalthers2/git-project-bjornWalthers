@@ -120,7 +120,14 @@ public class Git {
         try {
             String content = Files.readString(filePath);
             String hash = encryptThisString(content);
-            putInObjects(fileName, hash);
+            File ind = new File("git/objects/index");
+            if (!CheckTheString(hash, ind))
+            {
+                putInObjects(fileName, hash);
+            }
+            else{
+                System.out.println("this file already exists");
+            }
 
         } catch (IOException e) {
             // TODO Auto-generated catch block
