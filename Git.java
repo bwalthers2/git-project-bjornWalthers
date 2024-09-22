@@ -99,13 +99,13 @@ public class Git {
     //Adds the filename and the hash into the index file
     public static void putInIndex(String fileName,String hash)
     {
-        Path IndexPath = Paths.get(fileName);
         File ind = new File("git/index");
         String toHash = "\n" + hash;
         String theFile = " " + fileName;
         if (ind.exists())
         {
-            try (FileOutputStream outputStream = new FileOutputStream(ind)) {
+            try (FileOutputStream outputStream = new FileOutputStream(ind, true)) {
+
                 outputStream.write(toHash.getBytes());
                 outputStream.write(theFile.getBytes());
             }catch (IOException e) {
@@ -117,11 +117,8 @@ public class Git {
     //uses a file to create a hash and add it into the index file
     public static void MakeAndPlaceIndex(String fileName)
     {
-        Path IndexPath = Paths.get("git/index");
         Path filePath = Paths.get(fileName);
         try {
-            String toAppend = Files.readString(IndexPath);
-            System.out.println("I want to add"  + toAppend);
             String content = Files.readString(filePath);
             String hash = encryptThisString(content);
             File ind = new File("git/index");
@@ -167,10 +164,32 @@ public class Git {
         File Update = new File("git/objects/" + codedDirectory +"/" + encryptThisString(fileName + content).substring(2));
         if (Update.createNewFile() == true)
         {
-            System.out.println("blob made");
+            System.out.println("blob made for the file" + fileName);
         }
         try (FileOutputStream outputStream = new FileOutputStream(Update)) {
             outputStream.write(content.getBytes());
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    //Removes the files in objects so you can retest.
+    public static void removeTestFiles()
+    {
+        File objdir = new File("git/objects");
+        for (File subfile : objdir.listFiles()) {
+            if (subfile.isDirectory())
+            {
+                for (File hashfile : subfile.listFiles())
+                {
+                    hashfile.delete();
+                }
+                subfile.delete();
+            }
+        }
+        File ind = new File("git/index");
+        String data = "";
+        try (FileOutputStream outputStream = new FileOutputStream(ind)) {
+            outputStream.write(data.getBytes());
         }catch (IOException e) {
             e.printStackTrace();
         }

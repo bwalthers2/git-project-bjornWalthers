@@ -33,6 +33,7 @@ public class HashingBlobTester {
         }
         tester.MakeAndPlaceIndex(fileName4);
 
+        System.out.println();
         Path filePath = Paths.get(fileName3);
         try {
             String content = Files.readString(filePath);
@@ -59,7 +60,7 @@ public class HashingBlobTester {
         System.out.println(tester.CheckTheString("Test", ind));
         tester.AddFileContents(fileName3);
         tester.AddFileContents(fileName4);
-
+        tester.removeTestFiles();
     }
 }
 
