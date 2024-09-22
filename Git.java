@@ -27,7 +27,7 @@ public class Git {
         }
         else
             obj.mkdir();
-        File ind = new File("git/objects/index");
+        File ind = new File("git/index");
         if (ind.createNewFile() == true)
         {
             System.out.println("file made");
@@ -46,7 +46,7 @@ public class Git {
     //removes the repository that we just made
     public void remove()
     {
-        File ind = new File("git/objects/index");
+        File ind = new File("git/index");
         if (ind.delete())
         {
             System.out.println("deleted index");
@@ -97,9 +97,9 @@ public class Git {
 
     }
     //Adds the filename and the hash into the index file
-    public static void putInObjects(String fileName,String hash)
+    public static void putInIndex(String fileName,String hash)
     {
-        File ind = new File("git/objects/index");
+        File ind = new File("git/index");
         String toHash = "\n" + hash;
         String theFile = " " + fileName;
         if (ind.exists())
@@ -120,10 +120,10 @@ public class Git {
         try {
             String content = Files.readString(filePath);
             String hash = encryptThisString(content);
-            File ind = new File("git/objects/index");
+            File ind = new File("git/index");
             if (!CheckTheString(hash, ind))
             {
-                putInObjects(fileName, hash);
+                putInIndex(fileName, hash);
             }
             else{
                 System.out.println("this file already exists");
@@ -151,5 +151,12 @@ public class Git {
         return false;
 
 
+    }
+    //Adds the file data to the objects folderewr
+    public static void AddFileContents(String fileName)
+    {
+        String codedDirectory = encryptThisString(fileName).substring(0,2);
+        File fileToAdd = new File("git/objects/" + codedDirectory);
+       fileToAdd.mkdir();
     }
 }

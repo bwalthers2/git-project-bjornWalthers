@@ -33,7 +33,7 @@ public class HashingBlobTester {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        File ind = new File("git/objects/index");
+        File ind = new File("git/index");
         System.out.println(tester.CheckTheString("Test", ind));
     }
 }
