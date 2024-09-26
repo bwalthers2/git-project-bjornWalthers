@@ -1,4 +1,3 @@
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -9,26 +8,48 @@ import java.nio.file.Paths;
 public class HashingBlobTester {
     public static void main(String[] args) throws IOException {
         Git tester = new Git();
-        //Testing File
+        // Testing File
         String data = "abarkawoeno";
         String data2 = "mynameis";
         String newline = "\n";
         String fileName3 = "TestingHash1.txt";
         String fileName4 = "TestingHash2.txt";
+        String dirName = "TestingDirectory";
+        String dirInside = "TestingDirectory/nestedDir";
+        String fileInside = "TestingDirectory/nestedFile";
+        String doubleNestDir = "TestingDirectory/nestedDir/anothaOne";
+        String doubleNestFile = "TestingDirectory/nestedDir/anothaOne/finalOne";
+        String doubleDirInDir = "TestingDirectory/nestedDir/twoDirsInside";
+        File secondDirectoryInDir = new File(doubleDirInDir);
+        File nestFileInDir = new File(fileInside);
+        File doubleNestFilePointer = new File(doubleNestFile);
+        File doubleDir = new File(doubleNestDir);
+        File testDir = new File(dirName);
+        File dirInsideFile = new File(dirInside);
+        testDir.mkdir();
+        dirInsideFile.mkdir();
+        nestFileInDir.createNewFile();
+        doubleDir.mkdir();
+        doubleNestFilePointer.createNewFile();
+        secondDirectoryInDir.mkdir();
+        tester.MakeAndPlaceIndex(dirName);
+
+        // filling testFile 1 with words
         try (FileOutputStream outputStream = new FileOutputStream(fileName3)) {
             outputStream.write(data.getBytes());
             outputStream.write(newline.getBytes());
             outputStream.write(data.getBytes());
-        }catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         tester.MakeAndPlaceIndex(fileName3);
 
+        // filling testFile 2 with words
         try (FileOutputStream outputStream = new FileOutputStream(fileName4)) {
             outputStream.write(data2.getBytes());
             outputStream.write(newline.getBytes());
             outputStream.write(data2.getBytes());
-        }catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         tester.MakeAndPlaceIndex(fileName4);
@@ -40,7 +61,6 @@ public class HashingBlobTester {
             System.out.println("The contents of " + fileName3 + " are " + content);
             System.out.println("The hash of this file is " + tester.encryptThisString(content));
 
-
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -51,16 +71,16 @@ public class HashingBlobTester {
             System.out.println("The contents of " + fileName4 + " are " + content);
             System.out.println("The hash of this file is " + tester.encryptThisString(content));
 
-
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
         File ind = new File("git/index");
         System.out.println(tester.CheckTheString("Test", ind));
+        Git.printIndexForTesting();
         tester.AddFileContents(fileName3);
         tester.AddFileContents(fileName4);
         tester.removeTestFiles();
+
     }
 }
-
