@@ -116,19 +116,24 @@ public class Git {
         File checkIfDirFile = new File(fileName);
         try {
             if (checkIfDirFile.isDirectory()) {
+                // creates array of contents inside directory
                 File[] containedFilesArray = checkIfDirFile.listFiles();
+                // loops through to see if it contains another directory
                 for (int dirCheckInt = 0; dirCheckInt < containedFilesArray.length; dirCheckInt++) {
                     if (containedFilesArray[dirCheckInt].isDirectory()) {
                         String recursionDirName = "";
                         recursionDirName += containedFilesArray[dirCheckInt];
+                        // calls recursion to search through new directory
                         MakeAndPlaceIndex(recursionDirName);
                     } else {
+                        // if not directory then add to index
                         String recursionFile = "";
                         recursionFile += containedFilesArray[dirCheckInt];
                         String hashedNestFile = encryptThisString(recursionFile);
                         putInIndex(recursionFile, hashedNestFile);
                     }
                 }
+                // previous christian code
                 String containedFilesString = "";
                 for (int i = 0; i < containedFilesArray.length; i++) {
                     containedFilesString += containedFilesArray[i];

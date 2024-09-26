@@ -8,7 +8,7 @@ import java.nio.file.Paths;
 public class HashingBlobTester {
     public static void main(String[] args) throws IOException {
         Git tester = new Git();
-        // Testing File
+        // Testing File lotta stuff but it works
         String data = "abarkawoeno";
         String data2 = "mynameis";
         String newline = "\n";
