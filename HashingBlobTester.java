@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -8,7 +9,7 @@ import java.nio.file.Paths;
 public class HashingBlobTester {
     public static void main(String[] args) throws IOException {
         Git tester = new Git();
-        // Testing File
+        // Testing File lotta stuff but it works
         String data = "abarkawoeno";
         String data2 = "mynameis";
         String newline = "\n";
@@ -26,6 +27,9 @@ public class HashingBlobTester {
         File doubleDir = new File(doubleNestDir);
         File testDir = new File(dirName);
         File dirInsideFile = new File(dirInside);
+        FileWriter myWriter = new FileWriter("TestingDirectory/nestedDir/anothaOne/finalOne");
+        myWriter.write("Testing Object Contents");
+        myWriter.close();
         testDir.mkdir();
         dirInsideFile.mkdir();
         nestFileInDir.createNewFile();
@@ -77,9 +81,12 @@ public class HashingBlobTester {
         }
         File ind = new File("git/index");
         System.out.println(tester.CheckTheString("Test", ind));
+        // Git.AddFileContents(fileName3);
+        // Git.AddFileContents(fileName4);
         Git.printIndexForTesting();
-        tester.AddFileContents(fileName3);
-        tester.AddFileContents(fileName4);
+        // Git.printObjectsContentsTesting();
+        // tester.AddFileContents(fileName3);
+        // tester.AddFileContents(fileName4);
         tester.removeTestFiles();
 
     }

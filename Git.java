@@ -127,6 +127,7 @@ public class Git {
                         recursionFile += containedFilesArray[dirCheckInt];
                         String hashedNestFile = encryptThisString(recursionFile);
                         putInIndex(recursionFile, hashedNestFile);
+                        copyContentToObjects(containedFilesArray[dirCheckInt]);
                     }
                 }
                 String containedFilesString = "";
@@ -223,4 +224,26 @@ public class Git {
     public static void recursionSaveFilesDirectorys(String recursionFileName) {
 
     }
+
+    public static void copyContentToObjects(File inputCopy) throws IOException {
+        FileInputStream in = new FileInputStream(inputCopy);
+        File outputCopy = new File("git/objects/" + encryptThisString(inputCopy.getName()));
+        FileOutputStream out = new FileOutputStream(outputCopy);
+
+        try {
+            int n;
+            // read() function to read the
+            // byte of data
+            while ((n = in.read()) != -1) {
+                // write() function to write
+                // the byte of data
+                out.write(n);
+            }
+        } finally {
+            in.close();
+            out.close();
+        }
+        outputCopy.createNewFile();
+    }
+
 }
