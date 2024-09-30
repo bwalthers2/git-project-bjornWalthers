@@ -116,24 +116,20 @@ public class Git {
         File checkIfDirFile = new File(fileName);
         try {
             if (checkIfDirFile.isDirectory()) {
-                // creates array of contents inside directory
                 File[] containedFilesArray = checkIfDirFile.listFiles();
-                // loops through to see if it contains another directory
                 for (int dirCheckInt = 0; dirCheckInt < containedFilesArray.length; dirCheckInt++) {
                     if (containedFilesArray[dirCheckInt].isDirectory()) {
                         String recursionDirName = "";
                         recursionDirName += containedFilesArray[dirCheckInt];
-                        // calls recursion to search through new directory
                         MakeAndPlaceIndex(recursionDirName);
                     } else {
-                        // if not directory then add to index
                         String recursionFile = "";
                         recursionFile += containedFilesArray[dirCheckInt];
                         String hashedNestFile = encryptThisString(recursionFile);
                         putInIndex(recursionFile, hashedNestFile);
+                        copyContentToObjects(containedFilesArray[dirCheckInt]);
                     }
                 }
-                // previous christian code
                 String containedFilesString = "";
                 for (int i = 0; i < containedFilesArray.length; i++) {
                     containedFilesString += containedFilesArray[i];
@@ -228,4 +224,26 @@ public class Git {
     public static void recursionSaveFilesDirectorys(String recursionFileName) {
 
     }
+
+    public static void copyContentToObjects(File inputCopy) throws IOException {
+        FileInputStream in = new FileInputStream(inputCopy);
+        File outputCopy = new File("git/objects/" + encryptThisString(inputCopy.getName()));
+        FileOutputStream out = new FileOutputStream(outputCopy);
+
+        try {
+            int n;
+            // read() function to read the
+            // byte of data
+            while ((n = in.read()) != -1) {
+                // write() function to write
+                // the byte of data
+                out.write(n);
+            }
+        } finally {
+            in.close();
+            out.close();
+        }
+        outputCopy.createNewFile();
+    }
+
 }
