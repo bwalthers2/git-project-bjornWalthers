@@ -32,6 +32,9 @@ public class Git {
         } else {
             countToRemove = countToRemove + 1;
         }
+        File head = new File("git/HEAD");
+        head.createNewFile();
+
         if (countToRemove == 3) {
             System.out.println("Git repository exists");
             return;
@@ -55,6 +58,7 @@ public class Git {
         }
     }
 
+    //encrypts a string?
     public static String encryptThisString(String input) {
         try {
             // getInstance() method is called with algorithm SHA-1
@@ -246,4 +250,26 @@ public class Git {
         outputCopy.createNewFile();
     }
 
+    public void makeTree(){
+
+    }
+
+    public void stage(String baseRepositoryFileName){
+        MakeAndPlaceIndex(baseRepositoryFileName);
+
+    }
+
+
+    //public String commit(){
+        //create tree
+            //use parent tree data
+            //append all files in index
+        //write to file
+        //add parent sha
+        //clear index
+        //update head
+
+        //copy to objects folder
+        //return hash of commit
+    //}
 }

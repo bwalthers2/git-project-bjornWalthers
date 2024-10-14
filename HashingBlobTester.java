@@ -36,6 +36,8 @@ public class HashingBlobTester {
         doubleDir.mkdir();
         doubleNestFilePointer.createNewFile();
         secondDirectoryInDir.mkdir();
+
+        /** 
         tester.MakeAndPlaceIndex(dirName);
 
         // filling testFile 1 with words
@@ -87,7 +89,11 @@ public class HashingBlobTester {
         // Git.printObjectsContentsTesting();
         // tester.AddFileContents(fileName3);
         // tester.AddFileContents(fileName4);
-        tester.removeTestFiles();
+        //tester.removeTestFiles();
 
+        */
+
+        tester.stage("TestingDirectory");
+        
     }
 }
